@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class Question {
+ public class Question {
     private int question_id;
     private int question_id_gen = 1;
     private String text;

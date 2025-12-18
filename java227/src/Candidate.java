@@ -8,7 +8,7 @@ public class Candidate {
 
     Candidate(String name, double score) {
         this();
-        setName(name); // 'this' указывает на поле класса
+        setName(name);
         setScore(score);
     }
 
@@ -36,7 +36,7 @@ public class Candidate {
     public String toString() {
         return "Candidate:" +
                 "Candidate ID=" + can_id +
-                " Name=" + name +
-                " Score=" + score;
+                " Name=" + this.name +
+                " Score=" + this.score;
     }
 }

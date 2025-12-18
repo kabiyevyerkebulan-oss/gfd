@@ -1,54 +1,56 @@
 public class Main {
     public static void main(String[] args) {
-        String[] options1 = {"JDK", "JRE", "JVM", "IDE"};
+        String[] options1 = {"A1", "A2", "A3", "A4"};
         Question q1 = new Question(
-                1,
-                "Какое сокращение означает Java Development Kit?",
-                options1,
-                0, // JDK
-                5.0
-        );
-
-        String[] options2 = {"int", "String", "boolean", "char"};
-        Question q2 = new Question(
-                2,
-                "Какой тип данных не является примитивным в Java?",
-                options2,
-                1, // String
-                3.0
-        );
-
-        // Создадим копию q1 для демонстрации сравнения
-        Question q1Copy = new Question(
-                1,
-                "Копия Q1 (текст изменен)",
+                "Q1",
                 options1,
                 0,
                 5.0
         );
 
-        // 2. Вывод их в консоль
-        System.out.println("--- Список Вопросов ---");
+        String[] options2 = {"A1", "A2", "A3", "A4"};
+        Question q2 = new Question(
+                "Q2",
+                options2,
+                1,
+                3.0
+        );
+
+        System.out.println("Список Вопросов:");
         System.out.println(q1.toString());
         System.out.println(q2.toString());
-        System.out.println(q1Copy.toString());
 
-        System.out.println("\n--- Тестирование Методов ---");
-        // Проверка ответа на Q1 (0 - правильный)
-        System.out.println("Ответ на Q1 (индекс 0) правильный? " + q1.checkAnswer(0)); // true
-        // Проверка ответа на Q2 (2 - неправильный)
-        System.out.println("Ответ на Q2 (индекс 2) правильный? " + q2.checkAnswer(2)); // false
+        System.out.println("\nТестирование Методов:");
+        System.out.println("Ответ на Q1 (индекс 0) правильный? " + q1.checkAnswer(0));
+        System.out.println("Ответ на Q2 (индекс 2) правильный? " + q2.checkAnswer(2));
 
-        // 3. Сравнение нескольких объектов
-        System.out.println("\n--- Сравнение Объектов ---");
-        // q1 и q1Copy имеют одинаковый ID
-        System.out.println("Q1 равен Q1Copy (по ID)? " + q1.equals(q1Copy)); // true
-        // q1 и q2 имеют разный ID
-        System.out.println("Q1 равен Q2 (по ID)? " + q1.equals(q2)); // false
+    Candidate c1 = new Candidate(
+            "C1", 85.0
+    );
+    Candidate c2 = new Candidate(
+            "C2", 92.5
+    );
 
-        // Демонстрация сеттера
-        q1.setScoreValue(10.0);
-        System.out.println("\nНовое значение баллов для Q1: " + q1.getScoreValue()); // 10.0
+    System.out.println(c1.toString());
+    System.out.println(c2.toString());
+
+    if (c1.getScore() > c2.getScore()) {
+        System.out.println(c1.getName() + " набрал больше баллов!");
     }
+    else {
+        System.out.println(c2.getName() + " набрал больше баллов!");
     }
-}
+
+        Exam javaTest = new Exam(
+                "E1", 70.0
+        );
+
+        System.out.println(javaTest);
+        c1.toString();
+
+        if (javaTest.isPassed(c1.getScore())) {
+            System.out.println("Результат: " + c1.getName() + " успешно сдал экзамен!");
+        } else {
+            System.out.println("Результат: Нужно больше практиковаться.");
+        }
+}}
