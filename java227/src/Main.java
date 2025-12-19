@@ -49,7 +49,7 @@ public class Main {
         c1.toString();
 
         if (javaTest.isPassed(c1.getScore())) {
-            System.out.println("Результат: " + c1ё.getName() + " успешно сдал экзамен!");
+            System.out.println("Результат: " + c1.getName() + " успешно сдал экзамен!");
         } else {
             System.out.println("Результат: Нужно больше практиковаться.");
         }
