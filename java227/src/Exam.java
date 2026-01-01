@@ -1,12 +1,11 @@
 public class Exam {
     private int exam_id;
-    private int exam_id_gen = 1;
+    private static int exam_id_gen = 1;
     private String title;
     private double passing_score;
 
-    Exam (){exam_id = exam_id_gen++;}
-
     Exam (String title, double passing_score){
+        this.exam_id = exam_id_gen++;
         setTitle(title);
         setPassing_score(passing_score);
     }
@@ -39,5 +38,15 @@ public class Exam {
     public String toString() {
         return "Экзамен: " + title + " (Проходной балл: " + passing_score + ")";
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Exam other = (Exam) obj;
+        return title.equals(other.title); // Считаем экзамены одинаковыми, если названия совпали
+    }
+
+
 
 }

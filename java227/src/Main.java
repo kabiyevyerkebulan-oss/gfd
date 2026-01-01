@@ -24,6 +24,10 @@ public class Main {
         System.out.println("Ответ на Q1 (индекс 0) правильный? " + q1.checkAnswer(0));
         System.out.println("Ответ на Q2 (индекс 2) правильный? " + q2.checkAnswer(2));
 
+        System.out.println("\nСравнение Объектов");
+        System.out.println("Q1 равен Q1 (по ID)? " + q1.equals(q1));
+        System.out.println("Q1 равен Q2 (по ID)? " + q1.equals(q2));
+
     Candidate c1 = new Candidate(
             "C1", 85.0
     );
@@ -41,16 +45,20 @@ public class Main {
         System.out.println(c2.getName() + " набрал больше баллов!");
     }
 
+    System.out.println("Это один и тот же человек? " + c1.equals(c2));
+
         Exam javaTest = new Exam(
                 "E1", 70.0
         );
 
         System.out.println(javaTest);
-        c1.toString();
 
         if (javaTest.isPassed(c1.getScore())) {
             System.out.println("Результат: " + c1.getName() + " успешно сдал экзамен!");
         } else {
             System.out.println("Результат: Нужно больше практиковаться.");
         }
+
+        Exam anotherTest = new Exam("Java Basics", 70.0);
+        System.out.println("Экзамены идентичны? " + javaTest.equals(anotherTest));
 }}

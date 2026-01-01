@@ -1,13 +1,11 @@
 public class Candidate {
     private int can_id;
-    private int can_id_gen = 1;
+    private static int can_id_gen = 1;
     private String name;
     private double score;
 
-    Candidate(){can_id = can_id_gen++;}
-
     Candidate(String name, double score) {
-        this();
+        this.can_id = can_id_gen++;
         setName(name);
         setScore(score);
     }
@@ -35,8 +33,16 @@ public class Candidate {
     @Override
     public String toString() {
         return "Candidate:" +
-                "Candidate ID=" + can_id +
-                " Name=" + this.name +
-                " Score=" + this.score;
+                "ID: " + can_id +
+                " Name: " + this.name +
+                " Score: " + this.score;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Candidate other = (Candidate) obj;
+        return name.equals(other.name);
     }
 }
