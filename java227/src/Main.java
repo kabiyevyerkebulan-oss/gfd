@@ -1,37 +1,26 @@
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Scanner;
+import java.util.Locale;
 
 public class Main {
     public static void main(String[] args) {
-
         Scanner sc = new Scanner(System.in);
+        sc.useLocale(Locale.US);
+
+        CandidateDAO cdao = new CandidateDAO();
 
         ArrayList<Question> questions = new ArrayList<>();
+        String[] options = {"A1", "A2", "A3", "A4"};
 
-        String[] options1 = {"A1", "A2", "A3", "A4"};
-        String[] options2 = {"A1", "A2", "A3", "A4"};
+        questions.add(new Question("Q1", options, 0, 5.0));
+        questions.add(new Question("Q2", options, 1, 3.0));
 
-        questions.add(new Question("Q1", options1, 0, 5.0));
-        questions.add(new Question("Q2", options2, 1, 3.0));
-
-        Question q1 = questions.get(0);
-        Question q2 = questions.get(1);
-
-        System.out.println("List of questions:");
-        for(int i = 0; i < questions.size(); i++) {
-            System.out.println(questions.get(i));
-        }
-
+        System.out.println("List of questions (Sorted):");
         questions.sort(Comparator.comparing(Question::getText));
-
-        System.out.println("\nTesting Methods:");
-        System.out.println("Is the answer to Q1 with index 0 correct? " + q1.checkAnswer(0));
-        System.out.println("Is the answer to Q2 with index 1 correct? " + q2.checkAnswer(2));
-
-        System.out.println("\nObject Comparison");
-        System.out.println("Is Q1 equal to Q1 (by ID)? " + q1.equals(q1));
-        System.out.println("Is Q1 equal to Q2 (by ID)? " + q1.equals(q2));
+        for (Question q : questions) {
+            System.out.println(q);
+        }
 
         Candidate[] candidates = new Candidate[2];
         for (int i = 0; i < 2; i++) {
@@ -39,46 +28,59 @@ public class Main {
             String name = sc.nextLine();
             System.out.print("Enter the candidate's score " + (i + 1) + ": ");
             double score = sc.nextDouble();
-            sc.nextLine(); // поглощаем перенос строки
+            sc.nextLine();
+
             candidates[i] = new Candidate(name, score);
+
+            cdao.createCandidate(candidates[i]);
         }
 
-        System.out.println("\nCandidates:");
-        for (Candidate c : candidates) {
-            System.out.println(c);
-        }
-
+        System.out.println("\n--- Comparison ---");
         if (candidates[0].getScore() > candidates[1].getScore()) {
-            System.out.println(candidates[0].getText() + " Scored more points!");
+            System.out.println(candidates[0].getText() + " scored more points!");
         } else if (candidates[0].getScore() < candidates[1].getScore()) {
-            System.out.println(candidates[1].getText() + " Scored more points!");
+            System.out.println(candidates[1].getText() + " scored more points!");
         } else {
-            System.out.println("Both candidates scored the same number of points!");
+            System.out.println("Both scored the same points!");
         }
 
-        System.out.println("It's the same person? " + candidates[0].equals(candidates[1]));
+        System.out.print("\nEnter the passing score: ");
+        double ps = sc.nextDouble();
+        sc.nextLine();
 
-        System.out.print("Enter the passing score: ");
-        Double ps = sc.nextDouble();
+        Exam javaTest = new Exam("Midterm", candidates[0]);
+        javaTest.addQuestion(questions.get(0));
+        javaTest.addQuestion(questions.get(1));
 
-        Exam javaTest = new Exam(
-                "E1", ps
-        );
-
+        System.out.println("\n--- Exam Info ---");
         System.out.println(javaTest);
 
+        // Проверка результата
         if (javaTest.isPassed(candidates[0].getScore())) {
-            System.out.println("Result: " + candidates[0].getText() + " passed the exam successfully!");
+            System.out.println("Result: " + candidates[0].getText() + " passed!");
         } else {
-            System.out.println("Result: " + candidates[0].getText() + " We need to practice more");
+            System.out.println("Result: " + candidates[0].getText() + " failed");
         }
 
-        if (javaTest.isPassed(candidates[1].getScore())) {
-            System.out.println("Result: " + candidates[1].getText() + " passed the exam successfully!");
-        } else {
-            System.out.println("Result: " + candidates[1].getText() + " We need to practice more");
-        }
+        System.out.println("\n--- Database Operations ---");
 
-        Exam anotherTest = new Exam("Java Basics", 70.0);
-        System.out.println("The exams are identical? " + javaTest.equals(anotherTest));
-}}
+        // Обновление 1
+        System.out.print("Enter the candidate's name to update the score: ");
+        String nameToUpdate = sc.next();
+        System.out.print("Enter a new score: ");
+        double updatedScore = sc.nextDouble();
+        cdao.updateCandidateScore(nameToUpdate, updatedScore);
+
+        System.out.print("\nEnter the name of the second candidate to update: ");
+        nameToUpdate = sc.next();
+        System.out.print("Enter a new score: ");
+        updatedScore = sc.nextDouble();
+        cdao.updateCandidateScore(nameToUpdate, updatedScore);
+
+        System.out.print("\nEnter the name of the candidate to delete: ");
+        String nameToDelete = sc.next();
+        cdao.deleteCandidate(nameToDelete);
+
+        System.out.println("\nThe program is completed");
+    }
+}

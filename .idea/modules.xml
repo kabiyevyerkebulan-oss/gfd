@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/gfd.iml" filepath="$PROJECT_DIR$/.idea/gfd.iml" />
       <module fileurl="file://$PROJECT_DIR$/java227/java227.iml" filepath="$PROJECT_DIR$/java227/java227.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sql227/sql227.iml" filepath="$PROJECT_DIR$/sql227/sql227.iml" />
     </modules>
   </component>
 </project>
