@@ -64,7 +64,6 @@ public class Main {
 
         System.out.println("\n--- Database Operations ---");
 
-        // Обновление 1
         System.out.print("Enter the candidate's name to update the score: ");
         String nameToUpdate = sc.next();
         System.out.print("Enter a new score: ");

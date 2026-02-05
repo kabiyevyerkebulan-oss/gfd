@@ -1,4 +1,6 @@
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CandidateDAO {
     public void addCandidate(Candidate c) {
@@ -28,7 +30,7 @@ public class CandidateDAO {
         String sql = "INSERT INTO candidates (name, score) VALUES (?, ?)";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, c.getText()); // Используем метод getText() из твоего класса
+            pstmt.setString(1, c.getText());
             pstmt.setDouble(2, c.getScore());
             pstmt.executeUpdate();
             System.out.println("The candidate " + c.getText() + " saved to the database");
@@ -38,7 +40,7 @@ public class CandidateDAO {
     }
 
     public void updateCandidateScore(String name, double newScore) {
-        String sql = "UPDATE candidates SET score = ? WHERE name = ?"; // Проверь имя таблицы!
+        String sql = "UPDATE candidates SET score = ? WHERE name = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -56,14 +58,44 @@ public class CandidateDAO {
         }
     }
 
+    public List<Question> getAllQuestions() {
+        List<Question> list = new ArrayList<>();
+        String sql = "SELECT * FROM questions"; // Убедись, что таблица есть в БД
+        try (Connection conn = DBConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                // Предположим, у тебя такие поля в конструкторе Question
+                list.add(new Question(rs.getString("text"), null, 0, rs.getDouble("score")));
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+        return list;
+    }
+
+    public List<Candidate> getAllCandidates() {
+        List<Candidate> list = new ArrayList<>();
+        String sql = "SELECT * FROM candidates";
+        try (Connection conn = DBConnection.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                // Создаем объект на основе данных из БД
+                Candidate c = new Candidate(rs.getString("name"), rs.getDouble("score"));
+                list.add(c);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     public void deleteCandidate(String name) {
-        // SQL запрос с параметром (?) для безопасности
         String sql = "DELETE FROM candidates WHERE name = ?";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            // Подставляем имя вместо знака вопроса
             pstmt.setString(1, name);
 
             int rowsAffected = pstmt.executeUpdate();
