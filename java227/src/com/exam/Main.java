@@ -1,3 +1,5 @@
+package com.exam;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Scanner;
@@ -52,7 +54,7 @@ public class Main {
         javaTest.addQuestion(questions.get(0));
         javaTest.addQuestion(questions.get(1));
 
-        System.out.println("\n--- Exam Info ---");
+        System.out.println("\n--- com.exam.Exam Info ---");
         System.out.println(javaTest);
 
         // Проверка результата

@@ -1,3 +1,5 @@
+package com.exam;
+
 import java.util.Objects;
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +8,7 @@ public class Exam {
     private int exam_id;
     private static int exam_id_gen = 1;
     private Candidate candidate;
+    private int can_id;
     private String examName;
     private double totalScore;
     private List<Question> questions;
@@ -16,6 +19,7 @@ public class Exam {
         this.candidate = candidate;
         this.questions = new ArrayList<>();
         this.totalScore = 0.0;
+
     }
     public boolean isPassed(double candidateScore) {
         return candidateScore >= this.totalScore;
